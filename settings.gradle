@@ -1,2 +1,3 @@
 rootProject.name='HotFix'
 include ':app'
+include ':buildsrc'

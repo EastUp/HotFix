@@ -10,6 +10,6 @@ package com.east.hotfix;
  */
 public class Cat {
     public String say(){
-        return "汪汪";
+        return "喵喵";
     }
 }

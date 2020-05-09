@@ -1,5 +1,5 @@
 apply plugin: 'groovy'
-
+// 这个项目是用来自定义插件的，没用
 repositories {
     jcenter()
     google()

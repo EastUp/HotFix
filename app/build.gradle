@@ -1,8 +1,19 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: com.east.plugin.Register
+//apply plugin: com.east.plugin.Register
 android {
+    signingConfigs {
+        joke {
+            storeFile file(STOREFILE)
+            storePassword STOREPASS
+            keyAlias = KEYALIAS
+            keyPassword KEYPASS
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
@@ -18,8 +29,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.joke
         }
     }
 

@@ -150,7 +150,7 @@ ext {
     tinkerApplyResourcePath = "${bakPath}/tinker-release-0510-12-21-10-R.txt"
 
     //only use for build all flavor, if not, just ignore this field
-//    tinkerBuildFlavorDirectory = "${bakPath}/app-1018-17-32-47"
+    //多渠道打包时旧的apk、mapping.txt、R.txt文件配置的路径
     tinkerBuildFlavorDirectory = "${bakPath}/tinker-0510-20-52-38"
 }
 
@@ -456,7 +456,7 @@ if (buildWithTinker()) {
                             fileName.replace("${fileNamePrefix}.apk", "${newFileNamePrefix}.apk")
                         }
 
-                        project.logger.error variant.baseName
+                        project.logger.error variant.baseName  //flavor1-release
                         project.logger.error variant.dirName  //flavor1/release
 
                         def dirName = variant.dirName

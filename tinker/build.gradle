@@ -53,15 +53,15 @@ android {
 
 
     //    //use to test flavors support
-    productFlavors {
-        flavor1 {
-            applicationId 'com.east.tinker.flavor1'
-        }
-
-        flavor2 {
-            applicationId 'com.east.tinker.flavor2'
-        }
-    }
+//    productFlavors {
+//        flavor1 {
+//            applicationId 'com.east.tinker.flavor1'
+//        }
+//
+//        flavor2 {
+//            applicationId 'com.east.tinker.flavor2'
+//        }
+//    }
 
     buildTypes {
         release {
@@ -134,11 +134,11 @@ ext {
 
     //for normal build
     //old apk file to build patch apk
-    tinkerOldApkPath = "${bakPath}/app-debug-old.apk"
+    tinkerOldApkPath = "${bakPath}/tinker-release-0510-12-21-10.apk"
     //proguard mapping file to build patch apk
-    tinkerApplyMappingPath = "${bakPath}/app-debug-old-mapping.txt"
+    tinkerApplyMappingPath = "${bakPath}/tinker-release-0510-12-21-10-mapping.txt"
     //resource R.txt to build patch apk, must input if there is resource changed
-    tinkerApplyResourcePath = "${bakPath}/app-debug-old-R.txt"
+    tinkerApplyResourcePath = "${bakPath}/tinker-release-0510-12-21-10-R.txt"
 
     //only use for build all flavor, if not, just ignore this field
 //    tinkerBuildFlavorDirectory = "${bakPath}/app-1018-17-32-47"

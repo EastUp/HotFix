@@ -71,12 +71,6 @@ class SampleApplicationLike(
         //or you can put com.tencent.tinker.** to main dex
         TinkerManager.installTinker(this)
         val tinker = Tinker.with(application)
-
-        val path = Environment.getExternalStorageDirectory()
-            .absolutePath + "/patch_signed_7zip.apk"
-        val patchFile = File(path)
-        if (patchFile.exists())
-            TinkerInstaller.onReceiveUpgradePatch(application.applicationContext, path)
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)

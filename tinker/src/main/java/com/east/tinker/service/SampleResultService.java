@@ -16,6 +16,7 @@
 
 package com.east.tinker.service;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ import java.io.File;
  * optional, you can just use DefaultTinkerResultService
  * we can restart process when we are at background or screen off
  * Created by zhangshaowen on 16/4/13.
+ * 如果补丁加载成功后,我们可以在后台或屏幕关闭时重新启动过程
  */
 public class SampleResultService extends DefaultTinkerResultService {
     private static final String TAG = "Tinker.SampleResultService";
@@ -89,10 +91,14 @@ public class SampleResultService extends DefaultTinkerResultService {
 
     /**
      * you can restart your process through service or broadcast
+     * App不在显示的时候,进行重启
      */
     private void restartProcess() {
         TinkerLog.i(TAG, "app is background now, i can kill quietly");
         //you can send service or broadcast intent to restart your process
+        final Intent intent = getPackageManager().getLaunchIntentForPackage(getPackageName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 

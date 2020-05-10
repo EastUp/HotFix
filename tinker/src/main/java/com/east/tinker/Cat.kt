@@ -10,6 +10,6 @@ package com.east.tinker
  */
 class Cat {
     fun say(): String {
-        return "喵喵又修改了"
+        return "喵喵想说:Flavor1第七次哦"
     }
 }

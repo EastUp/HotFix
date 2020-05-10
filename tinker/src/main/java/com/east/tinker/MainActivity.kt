@@ -44,7 +44,10 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        tv_tip.text = "你好啊"
+        tv_tip.text = "第九次flavor1修改的"
+
+
+        tv_tip1.text = "Flavor1修改的第九次哦!!"
     }
 
     fun onClick(v: View){

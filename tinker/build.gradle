@@ -53,15 +53,15 @@ android {
 
 
     //    //use to test flavors support
-//    productFlavors {
-//        flavor1 {
-//            applicationId 'com.east.tinker.flavor1'
-//        }
-//
-//        flavor2 {
-//            applicationId 'com.east.tinker.flavor2'
-//        }
-//    }
+    productFlavors {
+        flavor1 {
+            applicationId 'com.east.tinker.flavor1'
+        }
+
+        flavor2 {
+            applicationId 'com.east.tinker.flavor2'
+        }
+    }
 
     buildTypes {
         release {
@@ -108,6 +108,15 @@ dependencies {
 //apply plugin: 'com.tencent.tinker.patch'
 //apply from: 'tinkerpatch.gradle'
 
+def getFlavorDir(String dirName){    //修改 variant.dirName  默认为flavor1/release 修改为了 flavor1Release
+    def split = dirName.split(File.separator)
+    project.logger.error "${split[0]}---${split[1]}"
+    def firstUpperCase = split[1].substring(0,1).toUpperCase()
+    project.logger.error firstUpperCase
+    def substring = split[1].substring(1)
+    project.logger.error substring
+    "${split[0]}$firstUpperCase$substring"
+}
 
 def gitSha() {
     try {
@@ -142,7 +151,7 @@ ext {
 
     //only use for build all flavor, if not, just ignore this field
 //    tinkerBuildFlavorDirectory = "${bakPath}/app-1018-17-32-47"
-    tinkerBuildFlavorDirectory = "${bakPath}/old"
+    tinkerBuildFlavorDirectory = "${bakPath}/tinker-0510-20-52-38"
 }
 
 
@@ -447,15 +456,26 @@ if (buildWithTinker()) {
                             fileName.replace("${fileNamePrefix}.apk", "${newFileNamePrefix}.apk")
                         }
 
-                        from "${buildDir}/outputs/mapping/${variant.dirName}/mapping.txt"
+                        project.logger.error variant.baseName
+                        project.logger.error variant.dirName  //flavor1/release
+
+                        def dirName = variant.dirName
+
+                        if(hasFlavors){
+                            dirName = getFlavorDir(dirName)  //修改成为flavor1Release
+                            project.logger.error dirName
+                        }
+
+
+                        from "${buildDir}/outputs/mapping/$dirName/mapping.txt"
                         into destPath
                         rename { String fileName ->
                             fileName.replace("mapping.txt", "${newFileNamePrefix}-mapping.txt")
                         }
 
-                        from "${buildDir}/intermediates/symbols/${variant.dirName}/R.txt"
-                        from "${buildDir}/intermediates/symbol_list/${variant.dirName}/R.txt"
-                        from "${buildDir}/intermediates/runtime_symbol_list/${variant.dirName}/R.txt"
+                        from "${buildDir}/intermediates/symbols/$dirName/R.txt"
+                        from "${buildDir}/intermediates/symbol_list/$dirName/R.txt"
+                        from "${buildDir}/intermediates/runtime_symbol_list/$dirName/R.txt"
                         into destPath
                         rename { String fileName ->
                             fileName.replace("R.txt", "${newFileNamePrefix}-R.txt")

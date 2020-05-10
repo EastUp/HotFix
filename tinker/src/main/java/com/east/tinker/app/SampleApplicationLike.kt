@@ -57,10 +57,13 @@ class SampleApplicationLike(
         super.onBaseContextAttached(base)
         //you must install multiDex whatever tinker is installed!
         MultiDex.install(base)
-        SampleApplicationContext.application = application
-        SampleApplicationContext.context = application
+
+        //这几个可以暂时不要
+//        SampleApplicationContext.application = application
+//        SampleApplicationContext.context = application
         TinkerManager.setTinkerApplicationLike(this)
-        TinkerManager.initFastCrashProtect()
+//        TinkerManager.initFastCrashProtect()
+
         //should set before tinker is installed
         TinkerManager.setUpgradeRetryEnable(true)
 

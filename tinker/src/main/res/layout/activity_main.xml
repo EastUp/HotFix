@@ -23,6 +23,17 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="30dp"
+        android:textColor="@color/tip1_color_blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_tip1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_tip"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/tip1_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

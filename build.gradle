@@ -23,6 +23,9 @@ buildscript {
 
         // TinkerPatch 插件
         classpath "com.tinkerpatch.sdk:tinkerpatch-gradle-plugin:$TINKERPATCH_VERSION"
+
+        // Bugly热修复
+        classpath "com.tencent.bugly:tinker-support:1.2.1"
     }
 }
 

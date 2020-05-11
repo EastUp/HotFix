@@ -146,7 +146,7 @@ ext {
 
     //only use for build all flavor, if not, just ignore this field
     //多渠道打包时旧的apk、mapping.txt、R.txt文件配置的路径
-    tinkerBuildFlavorDirectory = "${bakPath}/tinker-0510-20-52-38"
+    tinkerBuildFlavorDirectory = "${bakPath}/tinker-0511-16-07-43"
 }
 
 

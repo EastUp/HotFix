@@ -71,8 +71,6 @@ tinkerPatch {
     //oldApk ="${bakPath}/${appName}/app-debug.apk"
     ignoreWarning = false
     useSign = true
-    allowLoaderInAnyDex =true
-    removeLoaderForAllDex = true
     dex {
         dexMode = "jar"
         pattern = ["classes*.dex"]

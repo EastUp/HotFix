@@ -90,17 +90,12 @@ dependencies {
 
     implementation 'com.east:xgutils:0.2.30'
 
+    //****************以下是tinker的依赖
     api("com.tencent.tinker:tinker-android-lib:${TINKER_VERSION}") { changing = true }
-
     // Maven local cannot handle transist dependencies.
     implementation("com.tencent.tinker:tinker-android-loader:${TINKER_VERSION}") { changing = true }
-
     kapt ("com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}") { changing = true }
     compileOnly("com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}") { changing = true }
-
-    // 若使用annotation需要单独引用,对于tinker的其他库都无需再引用
-//    compileOnly("com.tinkerpatch.tinker:tinker-android-anno:${TINKER_VERSION}")
-//    api("com.tinkerpatch.sdk:tinkerpatch-android-sdk:1.2.14.6")
 
     implementation "androidx.multidex:multidex:2.0.1"
 }
@@ -109,7 +104,7 @@ dependencies {
 //apply from: 'tinkerpatch.gradle'
 
 def getFlavorDir(String dirName){    //修改 variant.dirName  默认为flavor1/release 修改为了 flavor1Release
-    def split = dirName.split(File.separator)
+    def split = dirName.split("/")
     project.logger.error "${split[0]}---${split[1]}"
     def firstUpperCase = split[1].substring(0,1).toUpperCase()
     project.logger.error firstUpperCase
@@ -181,29 +176,29 @@ def getTinkerBuildFlavorDirectory() {
 
 if (buildWithTinker()) {
 
-    // Hack Tinker to be compatible with AGP 3.6.0
-    plugins.whenPluginAdded { plugin ->
-        if (plugin.getClass().getName() == "com.tencent.tinker.build.gradle.TinkerPatchPlugin") {
-            plugin.metaClass.getObfuscateTask = { String variantName ->
-                String r8TaskName = "minify${variantName}WithR8"
-                def r8 = mProject.tasks.findByName(r8TaskName)
-                if (r8 != null) {
-                    return r8
-                }
-                throw new RuntimeException("Cannot find r8 task.")
-            }
-            plugin.metaClass.getR8Task = { String variantName ->
-                String r8TaskName = "minify${variantName}WithR8"
-                def r8Task = mProject.tasks.findByName(r8TaskName)
-                if (r8Task != null) {
-                    def multidexConfigTask = mProject.tasks.findByName("tinkerProcess${variantName}MultidexKeep")
-                    multidexConfigTask.multiDexKeepProguard = project.file("build/intermediates/legacy_multidex_aapt_derived_proguard_rules/${variantName.uncapitalize()}/manifest_keep.txt")
-                    r8Task.dependsOn multidexConfigTask
-                }
-                return null
-            }
-        }
-    }
+//    // Hack Tinker to be compatible with AGP 3.6.0
+//    plugins.whenPluginAdded { plugin ->
+//        if (plugin.getClass().getName() == "com.tencent.tinker.build.gradle.TinkerPatchPlugin") {
+//            plugin.metaClass.getObfuscateTask = { String variantName ->
+//                String r8TaskName = "minify${variantName}WithR8"
+//                def r8 = mProject.tasks.findByName(r8TaskName)
+//                if (r8 != null) {
+//                    return r8
+//                }
+//                throw new RuntimeException("Cannot find r8 task.")
+//            }
+//            plugin.metaClass.getR8Task = { String variantName ->
+//                String r8TaskName = "minify${variantName}WithR8"
+//                def r8Task = mProject.tasks.findByName(r8TaskName)
+//                if (r8Task != null) {
+//                    def multidexConfigTask = mProject.tasks.findByName("tinkerProcess${variantName}MultidexKeep")
+//                    multidexConfigTask.multiDexKeepProguard = project.file("build/intermediates/legacy_multidex_aapt_derived_proguard_rules/${variantName.uncapitalize()}/manifest_keep.txt")
+//                    r8Task.dependsOn multidexConfigTask
+//                }
+//                return null
+//            }
+//        }
+//    }
 
     apply plugin: 'com.tencent.tinker.patch'
 

@@ -1,0 +1,92 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+
+    dexOptions {
+        jumboMode = true
+    }
+
+    signingConfigs {
+        joke {
+            storeFile file(STOREFILE)
+            storePassword STOREPASS
+            keyAlias = KEYALIAS
+            keyPassword KEYPASS
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.east.tinkerpatch"
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+        multiDexKeepProguard file("tinkerMultidexKeep.pro") //keep specific classes using proguard syntax
+
+        //解决  Annotation processors must be explicitly declared now.
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+
+        //ERROR: All flavors must now belong to a named flavor dimension.
+        flavorDimensions "default"
+    }
+
+    //    //use to test flavors support
+    productFlavors {
+        flavor1 {
+            applicationId 'com.east.tinkerpatch.flavor1'
+        }
+
+        flavor2 {
+            applicationId 'com.east.tinkerpatch.flavor2'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.joke
+        }
+    }
+
+    compileOptions{
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation 'com.east:xgutils:0.2.30'
+
+    implementation "androidx.multidex:multidex:2.0.1"
+
+    //****************以下是tinkerpatch的依赖****************
+    // 若使用annotation需要单独引用,对于tinker的其他库都无需再引用
+    kapt("com.tinkerpatch.tinker:tinker-android-anno:${TINKER_VERSION}") { changing = true }
+    compileOnly("com.tinkerpatch.tinker:tinker-android-anno:${TINKER_VERSION}") { changing = true }
+    api("com.tinkerpatch.sdk:tinkerpatch-android-sdk:${TINKERPATCH_VERSION}") { changing = true }
+}
+
+apply from: 'tinkerpatch.gradle'

@@ -87,6 +87,8 @@
 -keep public class * extends android.support.v4.**
 -keep public class * extends android.support.v7.**
 -keep public class * extends android.support.annotation.**
+-keep public class * extends androidx.annotation.**
+-keep public class * extends androidx.**
 
 
 #表示不混淆任何包含native方法的类的类名以及native方法名，这个和我们刚才验证的结果是一致
